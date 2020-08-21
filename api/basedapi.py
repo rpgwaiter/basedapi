@@ -18,6 +18,7 @@ def generatejson(path="/Movies"):
     reqdir = rootdir + path
     d = {'reqdir': reqdir}
     files = [f for f in os.listdir(reqdir) if os.path.isfile(f)]
+    print(files)
     for i, name in zip(range(len(files)), sorted(files)):
         d[i] = {}
         d[i]['name'] = name
