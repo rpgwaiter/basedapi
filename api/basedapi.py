@@ -17,18 +17,17 @@ def generatejson(path="/Movies"):
     rootdir = "/mnt/public"
     reqdir = rootdir + path
     d = {'reqdir': reqdir}
-    for (root, dir, files) in os.walk(reqdir):
-        for i, name in zip(range(len(files)), sorted(files)):
-            d[i] = {}
-            d[i]['name'] = name
-
-            parse = MediaInfo.parse(reqdir + '/' + name)
-            print("Tracks: " + str(len(parse.tracks)))
-            for i2, track in zip(range(len(parse.tracks)), parse.tracks):
-                d[i][i2] = {}
-                if track.track_type == 'Video':
-                    d[i][i2]['bitrate'] = track.bit_rate
-                    d[i][i2]['codec'] = track.codec
+    files = [f for f in os.listdir('reqdir') if os.path.isfile(f)]
+    for i, name in zip(range(len(files)), sorted(files)):
+        d[i] = {}
+        d[i]['name'] = name
+        parse = MediaInfo.parse(reqdir + '/' + name)
+        print("Tracks: " + str(len(parse.tracks)))
+        for i2, track in zip(range(len(parse.tracks)), parse.tracks):
+            d[i][i2] = {}
+            if track.track_type == 'Video':
+                d[i][i2]['bitrate'] = track.bit_rate
+                d[i][i2]['codec'] = track.codec
     return d
 
 
