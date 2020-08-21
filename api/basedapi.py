@@ -20,12 +20,12 @@ def generatejson(path="/Movies"):
     for (root, dir, files) in os.walk(reqdir):
         for i, name in zip(range(0, len(files)), sorted(files)):
             d[i] = {}
-            d[i]['name': name]
+            d[i]['name'] = name
 
             for track in MediaInfo.parse(reqdir + '/' + name).tracks:
                 if track.track_type == 'Video':
-                    d[i]['bitrate': track.bitrate]
-                    d[i]['code': track.code]
+                    d[i]['bitrate'] = track.bitrate
+                    d[i]['code'] = track.code
 
         break
     return d
