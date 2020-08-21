@@ -43,4 +43,4 @@ def getstatus():
 
 
 if __name__ == '__main__':
-    api.run(debug=True, host="localhost", port=9001)
+    api.run(debug=True, host="0.0.0.0", port=9001)
