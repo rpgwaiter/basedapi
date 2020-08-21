@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/basedapi.iml" filepath="$PROJECT_DIR$/.idea/basedapi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../basedradio/.idea/basedradio.iml" filepath="$PROJECT_DIR$/../basedradio/.idea/basedradio.iml" />
     </modules>
   </component>
 </project>
