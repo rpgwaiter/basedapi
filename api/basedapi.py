@@ -23,7 +23,7 @@ def generatejson(path="/Movies"):
             d[i]['name'] = name
 
             parse = MediaInfo.parse(reqdir + '/' + name)
-            print("Tracks: " + len(parse.tracks))
+            print("Tracks: " + str(len(parse.tracks)))
             for track in parse.tracks:
                 if track.track_type == 'Video':
                     d[i]['bitrate'] = track.bit_rate
