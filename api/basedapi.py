@@ -19,11 +19,12 @@ def generatejson(path="/Movies"):
     d = {'reqdir': reqdir}
     files = [f for f in os.listdir(reqdir) if os.path.isfile(os.path.join(reqdir, f))]
     for i, name in zip(range(len(files)), sorted(files)):
+        fullname = reqdir + '/' + name
         d[i] = {}
         d[i]['name'] = name
+        d[i]['size'] = os.path.getsize(fullname)
+        parse = MediaInfo.parse(fullname)
 
-        parse = MediaInfo.parse(reqdir + '/' + name)
-        d[i]['size'] = parse.file_size
         for i2, track in zip(range(len(parse.tracks)), parse.tracks):
             if track.track_type == 'Video':
                 d[i]['video'] = {}
