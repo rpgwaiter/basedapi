@@ -30,6 +30,11 @@ def generatejson(path="/Movies"):
                 d[i]['video'] = {}
                 d[i]['video']['bitrate'] = track.bit_rate
                 d[i]['video']['codec'] = track.codec_id
+                d[i]['video']['duration'] = track.duration
+                d[i]['video']['size'] = track.file_size
+                d[i]['video']['width'] = track.width
+                d[i]['video']['height'] = track.height
+                d[i]['video']['aspect_ratio'] = track.display_aspect_ratio
     return d
 
 
