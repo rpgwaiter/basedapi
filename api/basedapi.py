@@ -29,7 +29,7 @@ def generatejson(path="/Movies"):
             if track.track_type == 'Video':
                 d[i][i2] = {}
                 d[i][i2]['bitrate'] = track.bit_rate
-                d[i][i2]['codec'] = track.codec
+                d[i][i2]['codec'] = track.codec_id
     return d
 
 
