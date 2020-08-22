@@ -27,9 +27,9 @@ def generatejson(path="/Movies"):
         for i2, track in zip(range(len(parse.tracks)), parse.tracks):
 
             if track.track_type == 'Video':
-                d[i][i2] = {}
-                d[i][i2]['bitrate'] = track.bit_rate
-                d[i][i2]['codec'] = track.codec_id
+                d[i]['video'] = {}
+                d[i]['video']['bitrate'] = track.bit_rate
+                d[i]['video']['codec'] = track.codec_id
     return d
 
 
