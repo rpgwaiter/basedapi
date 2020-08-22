@@ -21,14 +21,15 @@ def generatejson(path="/Movies"):
     for i, name in zip(range(len(files)), sorted(files)):
         d[i] = {}
         d[i]['name'] = name
+
         parse = MediaInfo.parse(reqdir + '/' + name)
+        d[i]['size'] = parse.file_size
         for i2, track in zip(range(len(parse.tracks)), parse.tracks):
             if track.track_type == 'Video':
                 d[i]['video'] = {}
                 d[i]['video']['bitrate'] = track.bit_rate
                 d[i]['video']['codec'] = track.codec_id
                 d[i]['video']['duration'] = track.duration
-                d[i]['video']['size'] = track.file_size
                 d[i]['video']['width'] = track.width
                 d[i]['video']['height'] = track.height
                 d[i]['video']['aspect_ratio'] = track.display_aspect_ratio
