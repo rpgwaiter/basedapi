@@ -77,7 +77,7 @@ def mediastatus(req):
 @app.route('/', methods=['GET'])
 @app.route('/<path:req>', methods=['GET'])
 @cache.cached(timeout=30)
-def getlisting(req='/'):
+def getlisting(req=''):
     return Response(buildlistingobject(req), mimetype='application/json')
 
 
