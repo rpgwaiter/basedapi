@@ -14,7 +14,7 @@ def buildmediaobject(req):
     tracks = MediaInfo.parse(fullname).tracks
     ret = {
         'apiversion': apiver,
-        'req': fullname
+        'req': req
     }
 
     for track in tracks:
@@ -31,7 +31,7 @@ def buildmediaobject(req):
     return json.dumps(ret, indent=4)
 
 
-def buildlistingobject(path)   :
+def buildlistingobject(path):
     rootdir = "/mnt/"
     reqdir = rootdir + path
     dirs = [f for f in os.listdir(reqdir) if os.path.isdir(os.path.join(reqdir, f))]
@@ -39,7 +39,7 @@ def buildlistingobject(path)   :
 
     ret = {
         'apiversion': apiver,
-        'reqdir': reqdir,
+        'root': path,
         'dirs': {},
         'files': {}
          }
