@@ -6,11 +6,16 @@ from flask import Response, Flask
 from flask_cors import CORS
 from flask_caching import Cache
 
+apiver = '0.1'
+
 
 def buildmediaobject(req):
     fullname = '/mnt/' + req
     tracks = MediaInfo.parse(fullname).tracks
-    ret = {'req': fullname}
+    ret = {
+        'apiversion': apiver,
+        'req': fullname
+    }
 
     for track in tracks:
         if track.track_type == 'Video':
@@ -32,7 +37,8 @@ def buildlistingobject(path)   :
     dirs = [f for f in os.listdir(reqdir) if os.path.isdir(os.path.join(reqdir, f))]
     files = [f for f in os.listdir(reqdir) if os.path.isfile(os.path.join(reqdir, f))]
 
-    d = {
+    ret = {
+        'apiversion': apiver,
         'reqdir': reqdir,
         'dirs': {},
         'files': {}
@@ -40,19 +46,19 @@ def buildlistingobject(path)   :
 
     for i, name in zip(range(len(dirs)), sorted(dirs)):
         fullname = reqdir + '/' + name
-        d['dirs'][i] = {
+        ret['dirs'][i] = {
             'name': name,
             'items': len(os.listdir(fullname))
         }
 
     for i, name in zip(range(len(files)), sorted(files)):
         fullname = reqdir + '/' + name
-        d['files'][i] = {
+        ret['files'][i] = {
             'name': name,
             'size': os.path.getsize(fullname),
         }
 
-    return json.dumps(d, indent=4)
+    return json.dumps(ret, indent=4)
 
 
 config = {
