@@ -48,7 +48,8 @@ def buildlistingobject(path)   :
         fullname = reqdir + '/' + name
         ret['dirs'][i] = {
             'name': name,
-            'items': len(os.listdir(fullname))
+            'items': len(os.listdir(fullname)),
+            'mtime': os.path.getmtime(fullname)
         }
 
     for i, name in zip(range(len(files)), sorted(files)):
@@ -56,6 +57,7 @@ def buildlistingobject(path)   :
         ret['files'][i] = {
             'name': name,
             'size': os.path.getsize(fullname),
+            'mtime': os.path.getmtime(fullname)
         }
 
     return json.dumps(ret, indent=4)
