@@ -34,6 +34,8 @@ def buildmediaobject(req):
 def buildlistingobject(path):
     rootdir = "/mnt/"
     reqdir = rootdir + path
+    if not os.path.exists(reqdir):
+        return {}
     dirs = [f for f in os.listdir(reqdir) if os.path.isdir(os.path.join(reqdir, f))]
     files = [f for f in os.listdir(reqdir) if os.path.isfile(os.path.join(reqdir, f))]
 
