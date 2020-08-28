@@ -31,23 +31,23 @@ def buildmediaobject(req):
     return json.dumps(ret, indent=4)
 
 
-def buildlistingobject(path):
+def buildlistingobject(req):
     rootdir = "/mnt/"
-    reqdir = rootdir + path
-    if not os.path.exists(reqdir):
+    fullpath = rootdir + req
+    if not os.path.exists(fullpath):
         return {}
-    dirs = [f for f in os.listdir(reqdir) if os.path.isdir(os.path.join(reqdir, f))]
-    files = [f for f in os.listdir(reqdir) if os.path.isfile(os.path.join(reqdir, f))]
+    dirs = [f for f in os.listdir(fullpath) if os.path.isdir(os.path.join(fullpath, f))]
+    files = [f for f in os.listdir(fullpath) if os.path.isfile(os.path.join(fullpath, f))]
 
     ret = {
         'apiversion': apiver,
-        'root': path,
+        'root': req,
         'dirs': {},
         'files': {}
          }
 
     for i, name in zip(range(len(dirs)), sorted(dirs)):
-        fullname = reqdir + '/' + name
+        fullname = fullpath + '/' + name
         ret['dirs'][i] = {
             'name': name,
             'items': len(os.listdir(fullname)),
@@ -55,7 +55,7 @@ def buildlistingobject(path):
         }
 
     for i, name in zip(range(len(files)), sorted(files)):
-        fullname = reqdir + '/' + name
+        fullname = fullpath + '/' + name
         ret['files'][i] = {
             'name': name,
             'size': os.path.getsize(fullname),
