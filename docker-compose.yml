@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+    api:
+        build:
+            args:
+                user: robots
+            context: ./
+            dockerfile: Dockerfile
+        ports:
+            - 8836:8836
+        volumes:
+            - /mnt/public:/mnt
+        restart: unless-stopped
+        networks:
+            - basedapi
+
+networks:
+    basedapi:
+        driver: bridge
