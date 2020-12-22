@@ -24,7 +24,7 @@ class DirListing:
                 'files': [f for f in os.listdir(self.currentdir) if os.path.isfile(os.path.join(self.currentdir, f))]}
 
 
-def buildmediaobject(req):
+def build_media_object(req):
     fullname = '/mnt/' + req
     tracks = MediaInfo.parse(fullname).tracks
     ret = {
@@ -46,7 +46,7 @@ def buildmediaobject(req):
     return json.dumps(ret, indent=4)
 
 
-def buildlistingobject(req):
+def build_listing_object(req):
     rootdir = "/mnt/"
     fullpath = rootdir + req
     if not os.path.exists(fullpath):
@@ -95,14 +95,14 @@ CORS(app)
 @app.route('/media/<path:req>', methods=['GET'])
 @cache.cached(timeout=30)
 def mediastatus(req):
-    return Response(buildmediaobject(req), mimetype='application/json')
+    return Response(build_media_object(req), mimetype='application/json')
 
 
 @app.route('/', methods=['GET'])
 @app.route('/<path:req>', methods=['GET'])
 @cache.cached(timeout=30)
 def getlisting(req=''):
-    return Response(buildlistingobject(req), mimetype='application/json')
+    return Response(build_listing_object(req), mimetype='application/json')
 
 
 if __name__ == '__main__':
