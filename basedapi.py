@@ -6,7 +6,22 @@ from flask import Response, Flask
 from flask_cors import CORS
 from flask_caching import Cache
 
-apiver = '0.1'
+apiver = '0.2'
+
+
+class DirListing:
+    def __init__(self, listing):  # 'listing' in this case is the full path to the dir
+        self._listing = listing
+
+        @property
+        def listing(self):
+            return self._listing
+
+        @listing.setter
+        def listing(self, currentdir):
+            self._listing = {
+                'dirs': [f for f in os.listdir(self.currentdir) if os.path.isdir(os.path.join(self.currentdir, f))],
+                'files': [f for f in os.listdir(self.currentdir) if os.path.isfile(os.path.join(self.currentdir, f))]}
 
 
 def buildmediaobject(req):
@@ -26,7 +41,7 @@ def buildmediaobject(req):
                 'width': track.width,
                 'height': track.height,
                 'aspect_ratio': track.display_aspect_ratio
-                }
+            }
         # TODO: Add more media types here
     return json.dumps(ret, indent=4)
 
@@ -36,17 +51,16 @@ def buildlistingobject(req):
     fullpath = rootdir + req
     if not os.path.exists(fullpath):
         return {}
-    dirs = [f for f in os.listdir(fullpath) if os.path.isdir(os.path.join(fullpath, f))]
-    files = [f for f in os.listdir(fullpath) if os.path.isfile(os.path.join(fullpath, f))]
+    listing = DirListing(fullpath).listing
 
     ret = {
         'apiversion': apiver,
         'root': req,
         'dirs': {},
         'files': {}
-         }
+    }
 
-    for i, name in zip(range(len(dirs)), sorted(dirs)):
+    for i, name in zip(range(len(listing.dirs)), sorted(listing.dirs)):
         fullname = fullpath + '/' + name
         ret['dirs'][i] = {
             'name': name,
@@ -54,7 +68,7 @@ def buildlistingobject(req):
             'mtime': os.path.getmtime(fullname)
         }
 
-    for i, name in zip(range(len(files)), sorted(files)):
+    for i, name in zip(range(len(listing.files)), sorted(listing.files)):
         fullname = fullpath + '/' + name
         ret['files'][i] = {
             'name': name,
@@ -66,8 +80,8 @@ def buildlistingobject(req):
 
 
 config = {
-    "DEBUG": True,          # some Flask specific configs
-    "CACHE_TYPE": "simple", # Flask-Caching related configs
+    "DEBUG": True,  # some Flask specific configs
+    "CACHE_TYPE": "simple",  # Flask-Caching related configs
     "CACHE_DEFAULT_TIMEOUT": 30
 }
 
