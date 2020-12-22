@@ -94,14 +94,14 @@ CORS(app)
 
 @app.route('/media/<path:req>', methods=['GET'])
 @cache.cached(timeout=30)
-def mediastatus(req):
+def media_status(req):
     return Response(build_media_object(req), mimetype='application/json')
 
 
 @app.route('/', methods=['GET'])
 @app.route('/<path:req>', methods=['GET'])
 @cache.cached(timeout=30)
-def getlisting(req=''):
+def get_listing(req=''):
     return Response(build_listing_object(req), mimetype='application/json')
 
 
