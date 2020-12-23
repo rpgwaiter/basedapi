@@ -40,7 +40,7 @@ def build_media_object(req):
 
 
 def build_listing_object(req):
-    fullpath = os.path.expandvars('$FILEHOST_PATH' + req)
+    fullpath = os.getenv('FILEHOST_PATH', '/mnt/')
     if not os.path.exists(fullpath):
         return {}
     listing = DirListing(fullpath)
