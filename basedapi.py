@@ -68,7 +68,7 @@ def build_listing_object(req):
         fullname = fullpath + '/' + name
         ret['dirs'][i] = {
             'name': name,
-            #'items': len(os.listdir(fullname)), ## I think this slowed down results significantly
+            'items': len(os.listdir(fullname)), ## I think this slowed down results significantly
             'mtime': os.path.getmtime(fullname)
         }
 
