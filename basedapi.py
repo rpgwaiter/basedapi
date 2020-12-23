@@ -44,7 +44,7 @@ def build_listing_object(req):
     fullpath = rootdir + req
     if not os.path.exists(fullpath):
         return {}
-    listing = DirListing(fullpath).listing
+    listing = DirListing(fullpath).parent
     print(listing)
 
     ret = {
