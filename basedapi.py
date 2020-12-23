@@ -1,6 +1,7 @@
 # Broadcasts info in json
 import json
 import os
+import random
 from pymediainfo import MediaInfo
 from flask import Response, Flask
 from flask_cors import CORS
@@ -11,17 +12,19 @@ apiver = '0.2'
 
 class DirListing:
     def __init__(self, listing):  # 'listing' in this case is the full path to the dir
-        self._listing = listing
+        self._listing = {
+            'dirs': [f for f in os.listdir(listing) if os.path.isdir(os.path.join(listing, f))],
+            'files': [f for f in os.listdir(listing) if os.path.isfile(os.path.join(listing, f))]}
 
-        @property
-        def listing(self):
-            return self._listing
+    @property
+    def listing(self):
+        return self._listing
 
-        @listing.setter
-        def listing(self, currentdir):
-            self._listing = {
-                'dirs': [f for f in os.listdir(self.currentdir) if os.path.isdir(os.path.join(self.currentdir, f))],
-                'files': [f for f in os.listdir(self.currentdir) if os.path.isfile(os.path.join(self.currentdir, f))]}
+    # @listing.setter
+    # def listing(self, currentdir):
+    #     self._listing = {
+    #         'dirs': [f for f in os.listdir(self.currentdir) if os.path.isdir(os.path.join(self.currentdir, f))],
+    #         'files': [f for f in os.listdir(self.currentdir) if os.path.isfile(os.path.join(self.currentdir, f))]}
 
 
 def build_media_object(req):
@@ -52,6 +55,7 @@ def build_listing_object(req):
     if not os.path.exists(fullpath):
         return {}
     listing = DirListing(fullpath).listing
+    print(listing)
 
     ret = {
         'apiversion': apiver,
@@ -64,7 +68,7 @@ def build_listing_object(req):
         fullname = fullpath + '/' + name
         ret['dirs'][i] = {
             'name': name,
-            'items': len(os.listdir(fullname)),
+            #'items': len(os.listdir(fullname)), ## I think this slowed down results significantly
             'mtime': os.path.getmtime(fullname)
         }
 
@@ -77,6 +81,13 @@ def build_listing_object(req):
         }
 
     return json.dumps(ret, indent=4)
+
+
+def get_based_string():
+    with open("./based.txt") as f:
+        content = f.read().splitlines()
+
+    return json.dumps({'message': random.choice(content)})
 
 
 config = {
@@ -96,6 +107,11 @@ CORS(app)
 @cache.cached(timeout=30)
 def media_status(req):
     return Response(build_media_object(req), mimetype='application/json')
+
+
+@app.route('/message', methods=['GET'])
+def route_based_string():
+    return Response(get_based_string(), mimetype='application/json')
 
 
 @app.route('/', methods=['GET'])
