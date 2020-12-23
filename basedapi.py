@@ -40,12 +40,10 @@ def build_media_object(req):
 
 
 def build_listing_object(req):
-    rootdir = "/mnt/"
-    fullpath = rootdir + req
+    fullpath = os.getenv('FILEHOST_PATH') + req
     if not os.path.exists(fullpath):
         return {}
-    listing = DirListing(fullpath).parent
-    print(listing)
+    listing = DirListing(fullpath)
 
     ret = {
         'apiversion': apiver,
@@ -54,7 +52,7 @@ def build_listing_object(req):
         'files': {}
     }
 
-    for i, name in zip(range(len(listing['dirs'])), sorted(listing['dirs'])):
+    for i, name in zip(range(len(listing.dirs)), sorted(listing.dirs)):
         fullname = fullpath + '/' + name
         ret['dirs'][i] = {
             'name': name,
@@ -62,7 +60,7 @@ def build_listing_object(req):
             'mtime': os.path.getmtime(fullname)
         }
 
-    for i, name in zip(range(len(listing['files'])), sorted(listing['files'])):
+    for i, name in zip(range(len(listing.files)), sorted(listing.files)):
         fullname = fullpath + '/' + name
         ret['files'][i] = {
             'name': name,
