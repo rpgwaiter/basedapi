@@ -64,7 +64,7 @@ def build_listing_object(req):
         'files': {}
     }
 
-    for i, name in zip(range(len(listing['dirs'])), sorted(listing'dirs')):
+    for i, name in zip(range(len(listing['dirs'])), sorted(listing['dirs'])):
         fullname = fullpath + '/' + name
         ret['dirs'][i] = {
             'name': name,
