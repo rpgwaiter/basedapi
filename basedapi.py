@@ -18,7 +18,7 @@ class DirListing:
 
 
 def build_media_object(req):
-    fullname = os.path.expandvars('$FILEHOST_PATH' + req)
+    fullname = os.getenv('FILEHOST_PATH', '/mnt/') + req
     tracks = MediaInfo.parse(fullname).tracks
     ret = {
         'apiversion': apiver,
@@ -40,7 +40,7 @@ def build_media_object(req):
 
 
 def build_listing_object(req):
-    fullpath = os.getenv('FILEHOST_PATH', '/mnt/')
+    fullpath = os.getenv('FILEHOST_PATH', '/mnt/') + req
     if not os.path.exists(fullpath):
         return {}
     listing = DirListing(fullpath)
