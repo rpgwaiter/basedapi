@@ -11,24 +11,14 @@ apiver = '0.2'
 
 
 class DirListing:
-    def __init__(self, listing):  # 'listing' in this case is the full path to the dir
-        self._listing = {
-            'dirs': [f for f in os.listdir(listing) if os.path.isdir(os.path.join(listing, f))],
-            'files': [f for f in os.listdir(listing) if os.path.isfile(os.path.join(listing, f))]}
+    def __init__(self, parent):  # 'listing' in this case is the full path to the dir
+        self.dirs = [f for f in os.listdir(parent) if os.path.isdir(os.path.join(parent, f))]
+        self.files = [f for f in os.listdir(parent) if os.path.isfile(os.path.join(parent, f))]
 
-    @property
-    def listing(self):
-        return self._listing
-
-    # @listing.setter
-    # def listing(self, currentdir):
-    #     self._listing = {
-    #         'dirs': [f for f in os.listdir(self.currentdir) if os.path.isdir(os.path.join(self.currentdir, f))],
-    #         'files': [f for f in os.listdir(self.currentdir) if os.path.isfile(os.path.join(self.currentdir, f))]}
 
 
 def build_media_object(req):
-    fullname = '/mnt/' + req
+    fullname = os.getenv('FILEHOST_PATH') + req
     tracks = MediaInfo.parse(fullname).tracks
     ret = {
         'apiversion': apiver,

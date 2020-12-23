@@ -8,6 +8,8 @@ services:
             dockerfile: Dockerfile
         ports:
             - 8836:8836
+        environment:
+            - FILEHOST_PATH='/mnt'
         volumes:
             - /mnt/public:/mnt
         restart: unless-stopped
