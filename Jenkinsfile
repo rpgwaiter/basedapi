@@ -4,6 +4,7 @@ pipeline {
         registry = "rpgwaiter/basedapi" 
         registryCredential = 'rpgwaiter-dockerhub' 
         dockerImage = '' 
+        PATH = "/run/wrappers/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:$PATH" // Needed for NixOS
     }
     agent any 
     stages {
