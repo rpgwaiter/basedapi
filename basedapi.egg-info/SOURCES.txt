@@ -1,0 +1,7 @@
+README.md
+basedapi.py
+setup.py
+basedapi.egg-info/PKG-INFO
+basedapi.egg-info/SOURCES.txt
+basedapi.egg-info/dependency_links.txt
+basedapi.egg-info/top_level.txt

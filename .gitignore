@@ -1,2 +1,5 @@
 /venv
 /.idea
+.history
+.direnv
+/result
