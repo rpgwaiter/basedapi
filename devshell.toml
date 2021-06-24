@@ -20,7 +20,7 @@ packages = [
 [[commands]]
 help = "Run the api"
 name = "dev"
-command = "nix build .# && python ./result/lib/python3.9/site-packages/basedapi.py"
+command = "(nix build .# || nix build github:rpgwaiter/basedapi) && python ./result/lib/python3.9/site-packages/basedapi.py"
 
 [[commands]]
 package = "nixpkgs-fmt"
