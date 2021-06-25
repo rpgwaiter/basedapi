@@ -11,16 +11,14 @@ motd = "To get starded, run `nix build .#`, then run the api with `python ./resu
 #
 # NOTE: don't forget to put commas between items! :)
 packages = [
-  "ffmpeg",
   "python3",
-  "python3Packages.pymediainfo",
 ]
 
 # Declare commands that are available in the environment.
 [[commands]]
 help = "Run the api"
 name = "run"
-command = "nix run .# || nix run github:rpgwaiter/basedapi"
+command = "nix run .# 2>/dev/null || nix run github:rpgwaiter/basedapi"
 
 [[commands]]
 package = "nixpkgs-fmt"
