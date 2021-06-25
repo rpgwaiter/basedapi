@@ -1,13 +1,13 @@
-{ lib, buildPythonPackage, dateutil, flask, pymediainfo }:
+{ lib, buildPythonApplication, dateutil, flask, flask-cors, flask-caching, pymediainfo, setuptools }:
 
-buildPythonPackage rec {
+buildPythonApplication rec {
   pname = "basedapi";
   version = "0.1.0";
 
   src = ./.;
 
   checkInputs = [  ];
-  propagatedBuildInputs = [ ];
+  propagatedBuildInputs = [ pymediainfo setuptools flask flask-cors flask-caching ];
 
   meta = with lib; {
     homepage = "https://github.com/rpgwaiter/basedapi";

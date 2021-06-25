@@ -108,6 +108,9 @@ def route_based_string():
 def get_listing(req=''):
     return Response(build_listing_object(req), mimetype='application/json')
 
+def main(args=None):
+    app.run(debug=False, host="0.0.0.0", port=8836)
+
 
 if __name__ == '__main__':
-    app.run(debug=False, host="0.0.0.0", port=8836)
+    sys.exit(main())

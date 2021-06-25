@@ -4,7 +4,7 @@ name = "basedapi"
 # Message Of The Day (MOTD) is displayed when entering the environment with an
 # interactive shell. By default it will show the project name.
 #
-# motd = ""
+motd = "To get starded, run `nix build .#`, then run the api with `python ./result/"
 
 # Add packages from nixpkgs here. Use `nix search nixpkgs <term>` to find the
 # package that you need.
@@ -20,7 +20,7 @@ packages = [
 [[commands]]
 help = "Run the api"
 name = "dev"
-command = "(nix build .# || nix build github:rpgwaiter/basedapi) && python ./result/lib/python3.9/site-packages/basedapi.py"
+command = "(nix build .# || nix build github:rpgwaiter/basedapi) && python './result/lib/python3.9/site-packages/basedapi.py'"
 
 [[commands]]
 package = "nixpkgs-fmt"

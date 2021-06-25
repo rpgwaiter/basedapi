@@ -23,9 +23,10 @@
       packages.x86_64-linux = rec {
         basedapi = pkgs.callPackage ./default.nix { 
           inherit (pkgs) lib dateutil;
-          inherit (pkgs.python39Packages) buildPythonPackage pymediainfo flask;
+          inherit (pkgs.python39Packages) buildPythonApplication setuptools flask-cors flask-caching pymediainfo flask;
         };
       };
       defaultPackage.x86_64-linux = packages.x86_64-linux.basedapi;
+      
     };
 }
