@@ -19,8 +19,8 @@ packages = [
 # Declare commands that are available in the environment.
 [[commands]]
 help = "Run the api"
-name = "dev"
-command = "(nix build .# || nix build github:rpgwaiter/basedapi) && python './result/lib/python3.9/site-packages/basedapi.py'"
+name = "run"
+command = "nix run .# || nix run github:rpgwaiter/basedapi"
 
 [[commands]]
 package = "nixpkgs-fmt"
